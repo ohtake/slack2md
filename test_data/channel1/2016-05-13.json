@@ -1,0 +1,31 @@
+[
+    {
+        "user": "U00000001",
+        "type": "message",
+        "subtype": "channel_join",
+        "text": "<@U00000001|alice> has joined the channel",
+        "ts": "1463128987.000002"
+    },
+    {
+        "user": "U00000001",
+        "purpose": "",
+        "type": "message",
+        "subtype": "channel_purpose",
+        "text": "<@U00000001|alice> set the channel purpose: ",
+        "ts": "1463128989.000003"
+    },
+    {
+        "user": "U00000002",
+        "inviter": "U00000001",
+        "type": "message",
+        "subtype": "channel_join",
+        "text": "<@U00000002|bob> has joined the channel",
+        "ts": "1463128989.000004"
+    },
+    {
+        "type": "message",
+        "user": "U00000001",
+        "text": "Hello, <@U00000002>",
+        "ts": "1463129038.000008"
+    }
+]

@@ -17,6 +17,12 @@ type User struct {
 	Name string `json:"name"`
 }
 
+type Message struct {
+	User string `json:"user"`
+	Text string `json:"text"`
+	Ts   string `json:"ts"`
+}
+
 func ReadChannels(channel_json_filename string) []Channel {
 	var channels []Channel
 	body, _ := ioutil.ReadFile(channel_json_filename)
@@ -31,6 +37,13 @@ func ReadUsers(user_json_filename string) []User {
 	return users
 }
 
+func ReadHistory(history_json_filename string) []Message {
+	var messages []Message
+	body, _ := ioutil.ReadFile(history_json_filename)
+	_ = json.Unmarshal(body, &messages)
+	return messages
+}
+
 func main() {
 	fmt.Printf("hello, world\n")
 
@@ -41,4 +54,8 @@ func main() {
 	users := ReadUsers("slack_export/users.json")
 	fmt.Println(users[0].Name)
 	fmt.Println(users[1].Name)
+
+	messages := ReadHistory("test_data/channel1/2016-05-13.json")
+	fmt.Println(messages[0].Text)
+	fmt.Println(messages[1].Text)
 }
