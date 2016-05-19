@@ -1,0 +1,46 @@
+[
+    {
+        "id": "C00000001",
+        "name": "channel1",
+        "created": "1463128988",
+        "creator": "U00000001",
+        "is_archived": false,
+        "is_general": false,
+        "members": [
+            "U00000001",
+            "U00000002"
+        ],
+        "topic": {
+            "value": "",
+            "creator": "",
+            "last_set": "0"
+        },
+        "purpose": {
+            "value": "",
+            "creator": "U00000001",
+            "last_set": "1463128989"
+        }
+    },
+    {
+        "id": "C00000002",
+        "name": "channel2",
+        "created": "1436515520",
+        "creator": "U00000002",
+        "is_archived": false,
+        "is_general": false,
+        "members": [
+            "U00000001",
+            "U00000002"
+        ],
+        "topic": {
+            "value": "",
+            "creator": "",
+            "last_set": "0"
+        },
+        "purpose": {
+            "value": "",
+            "creator": "U00000002",
+            "last_set": "1436515554"
+        }
+    }
+]

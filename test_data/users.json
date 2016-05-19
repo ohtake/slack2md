@@ -1,0 +1,80 @@
+[
+    {
+        "id": "U00000001",
+        "team_id": "T00000001",
+        "name": "alice",
+        "deleted": false,
+        "status": null,
+        "color": "e7392d",
+        "real_name": "Alice Doe",
+        "tz": null,
+        "tz_label": "Pacific Daylight Time",
+        "tz_offset": -25200,
+        "profile": {
+            "first_name": "Alice",
+            "last_name": "Doe",
+            "avatar_hash": "01234567890ab",
+            "image_24": "https:\/\/avatars.slack-edge.com\/2016-04-27\/00000000000_01234567890abcdef012_24.jpg",
+            "image_32": "https:\/\/avatars.slack-edge.com\/2016-04-27\/00000000000_01234567890abcdef012_32.jpg",
+            "image_48": "https:\/\/avatars.slack-edge.com\/2016-04-27\/00000000000_01234567890abcdef012_48.jpg",
+            "image_72": "https:\/\/avatars.slack-edge.com\/2016-04-27\/00000000000_01234567890abcdef012_72.jpg",
+            "image_192": "https:\/\/avatars.slack-edge.com\/2016-04-27\/00000000000_01234567890abcdef012_192.jpg",
+            "image_512": "https:\/\/avatars.slack-edge.com\/2016-04-27\/00000000000_01234567890abcdef012_512.jpg",
+            "image_1024": "https:\/\/avatars.slack-edge.com\/2016-04-27\/00000000000_01234567890abcdef012_1024.jpg",
+            "image_original": "https:\/\/avatars.slack-edge.com\/2016-04-27\/00000000000_01234567890abcdef012_original.jpg",
+            "fields": [
+
+            ],
+            "title": "",
+            "phone": "",
+            "skype": "",
+            "real_name": "Alice Doe",
+            "real_name_normalized": "Alice Doe",
+            "email": "alice.doe@example.com"
+        },
+        "is_admin": false,
+        "is_owner": false,
+        "is_primary_owner": false,
+        "is_restricted": false,
+        "is_ultra_restricted": false,
+        "is_bot": false
+    },
+    {
+        "id": "U00000002",
+        "team_id": "T00000001",
+        "name": "bob",
+        "deleted": false,
+        "status": null,
+        "color": "5b89d5",
+        "real_name": "Bob Doe",
+        "tz": "Asia\/Tokyo",
+        "tz_label": "Japan Standard Time",
+        "tz_offset": 32400,
+        "profile": {
+            "avatar_hash": "g0123456789a",
+            "fields": [
+
+            ],
+            "first_name": "Bob",
+            "last_name": "Doe",
+            "title": "",
+            "phone": "",
+            "skype": "",
+            "real_name": "Bob Doe",
+            "real_name_normalized": "Bob Doe",
+            "email": "bob.doe@example.com",
+            "image_24": "https:\/\/secure.gravatar.com\/avatar\/0123456789abcdef0123456789abcdef.jpg?s=24&d=https%3A%2F%2Fa.slack-edge.com%2F66f9%2Fimg%2Favatars%2Fava_0002-24.png",
+            "image_32": "https:\/\/secure.gravatar.com\/avatar\/0123456789abcdef0123456789abcdef.jpg?s=32&d=https%3A%2F%2Fa.slack-edge.com%2F66f9%2Fimg%2Favatars%2Fava_0002-32.png",
+            "image_48": "https:\/\/secure.gravatar.com\/avatar\/0123456789abcdef0123456789abcdef.jpg?s=48&d=https%3A%2F%2Fa.slack-edge.com%2F66f9%2Fimg%2Favatars%2Fava_0002-48.png",
+            "image_72": "https:\/\/secure.gravatar.com\/avatar\/0123456789abcdef0123456789abcdef.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2F66f9%2Fimg%2Favatars%2Fava_0002-72.png",
+            "image_192": "https:\/\/secure.gravatar.com\/avatar\/0123456789abcdef0123456789abcdef.jpg?s=192&d=https%3A%2F%2Fa.slack-edge.com%2F66f9%2Fimg%2Favatars%2Fava_0002-192.png",
+            "image_512": "https:\/\/secure.gravatar.com\/avatar\/0123456789abcdef0123456789abcdef.jpg?s=512&d=https%3A%2F%2Fa.slack-edge.com%2F66f9%2Fimg%2Favatars%2Fava_0002-512.png"
+        },
+        "is_admin": false,
+        "is_owner": false,
+        "is_primary_owner": false,
+        "is_restricted": false,
+        "is_ultra_restricted": false,
+        "is_bot": false
+    }
+]
