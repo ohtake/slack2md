@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var userRegexInMessage = regexp.MustCompile("(?:<@)U[0-9A-Z]{8}(?:\\|[-_A-Za-z0-9]+)?(?:>)")
+var userRegexInMessage = regexp.MustCompile("(?:<@)U[0-9A-Z]{8}(?:\\|[-_.A-Za-z0-9]+)?(?:>)")
 
 type UserResolver struct {
 	idMap map[string]*User
