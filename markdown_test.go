@@ -56,8 +56,8 @@ func TestMarkdownChannelList(t *testing.T) {
 	m := NewMarkdownTranslator()
 	channels := ReadChannels("testdata/channels.json")
 	testLines(t, m.ToChannelList(channels), []string{
-		"* [\\#channel1](channel--channel1.md)",
-		"* [\\#channel2](channel--channel2.md)",
+		"* [\\#channel1](output%2Fchannel--channel1.md)",
+		"* [\\#channel2](output%2Fchannel--channel2.md)",
 		"",
 	})
 }

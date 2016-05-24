@@ -48,7 +48,7 @@ func (t *MarkdownTranslator) ToChannelList(channels []Channel) []string {
 	result := make([]string, 0, len(channels)+1)
 	for _, ch := range channels {
 		text := "#" + ch.Name
-		link := t.FileNameChannel(ch.Name)
+		link := "output%2F" + t.FileNameChannel(ch.Name)
 		result = append(result, fmt.Sprintf("* [%v](%v)", t.Escape(text), link))
 	}
 	result = append(result, "")
@@ -59,7 +59,7 @@ func (t *MarkdownTranslator) ToChunkList(chunks []ChunkInfo) []string {
 	result := make([]string, 0, len(chunks)+1)
 	for i, ch := range chunks {
 		text := fmt.Sprintf("%v (%v - %v)", i+1, toTimeStampString(ch.Start), toTimeStampString(ch.End))
-		link := t.FileNameHistory(ch.ChannelName, i+1)
+		link := "output%2F" + t.FileNameHistory(ch.ChannelName, i+1)
 		result = append(result, fmt.Sprintf("* [%v](%v)", t.Escape(text), link))
 	}
 	result = append(result, "")
