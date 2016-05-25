@@ -42,10 +42,10 @@ func createHistory(channel Channel, pageNumber int, messages []MessageResolved) 
 	w.WriteMessageList(messages)
 }
 
-func resolveMessages(messages []Message, resolver *UserResolver) []MessageResolved {
+func resolveMessages(messages []Message, resolver *Resolver) []MessageResolved {
 	r := make([]MessageResolved, 0, len(messages))
 	for _, m := range messages {
-		r = append(r, m.Resolve(resolver))
+		r = append(r, resolver.Resolve(&m))
 	}
 	return r
 }
@@ -54,7 +54,8 @@ func main() {
 	_ = os.Mkdir(outputDir, os.ModeDir)
 
 	channels := ReadChannels(path.Join(inputDir, "channels.json"))
-	userResolver := NewUserResolver(ReadUsers(path.Join(inputDir, "users.json")))
+	users := ReadUsers(path.Join(inputDir, "users.json"))
+	resolver := NewResolver(channels, users)
 
 	createIndex(channels)
 
@@ -64,7 +65,7 @@ func main() {
 		reader := NewChunkedHistoryReader(chunkSize, path.Join(inputDir, ch.Name))
 		for chunk := reader.NextChunk(); len(chunk) > 0; chunk = reader.NextChunk() {
 			pageNumber++
-			messagesResolved := resolveMessages(chunk, userResolver)
+			messagesResolved := resolveMessages(chunk, resolver)
 			createHistory(ch, pageNumber, messagesResolved)
 			chunks = append(chunks, ToChunkInfo(ch.Name, messagesResolved))
 		}

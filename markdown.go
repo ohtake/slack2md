@@ -68,8 +68,28 @@ func (t *MarkdownTranslator) ToChunkList(chunks []ChunkInfo) []string {
 func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 	result := make([]string, 0, len(chunk)+1)
 	for _, m := range chunk {
-		// TODO
-		result = append(result, "* "+m.Text)
+		md := make([]string, 0, 1+len(m.MessageTokens))
+		header := m.Ts.String()
+		md = append(md, "* "+header+": ")
+		for _, token := range m.MessageTokens {
+			switch token := token.(type) {
+			case MessageTokenNewLine:
+				md = append(md, "\n    ")
+			case MessageTokenText:
+				md = append(md, token.Text)
+			case MessageTokenLink:
+				md = append(md, "["+t.Escape(token.Text)+"]("+token.Href+")")
+			case MessageTokenChannel:
+				md = append(md, "#"+token.Text)
+			case MessageTokenUser:
+				md = append(md, "@"+token.Text)
+			case MessageTokenVariable:
+				md = append(md, "@"+token.Text)
+			default:
+				panic("Unknown message type")
+			}
+		}
+		result = append(result, strings.Join(md, ""))
 	}
 	result = append(result, "")
 	return result

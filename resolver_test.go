@@ -5,12 +5,12 @@ import (
 	"time"
 )
 
-func newUserResolver() *UserResolver {
-	return NewUserResolver(ReadUsers("test_data/users.json"))
+func newResolver() *Resolver {
+	return NewResolver(ReadChannels("test_data/channels.json"), ReadUsers("test_data/users.json"))
 }
 
 func TestResolve(t *testing.T) {
-	userResolver := newUserResolver()
+	resolver := newResolver()
 
 	expected := []struct{ id, name string }{
 		{"U00000001", "alice"},
@@ -18,24 +18,24 @@ func TestResolve(t *testing.T) {
 	}
 
 	for _, e := range expected {
-		user := userResolver.Resolve(e.id)
+		user := resolver.ResolveUser(e.id)
 		if user == nil {
 			t.Errorf("Cannot find user: %q", e.id)
 		} else if user.Name != e.name {
 			t.Errorf("Found different user: %q, %q", user.Name, e.name)
 		}
 	}
-	user2 := userResolver.Resolve("U99999999")
+	user2 := resolver.ResolveUser("U99999999")
 	if user2 != nil {
 		t.Error("Found unexpected user")
 	}
 }
 
 func TestResolveMessage(t *testing.T) {
-	userResolver := newUserResolver()
+	resolver := newResolver()
 	messages := ReadHistory("test_data/channel1/2016-05-13.json")
 
-	m1 := messages[0].Resolve(userResolver)
+	m1 := resolver.Resolve(&messages[0])
 	if m1.User.Name != "alice" {
 		t.Errorf("Cannot resolve user: %q, &q", m1.User.Name, "alice")
 	}
@@ -43,12 +43,18 @@ func TestResolveMessage(t *testing.T) {
 		m1.Ts.After(time.Date(2016, 5, 13, 8, 43, 8, 0, time.UTC)) {
 		t.Errorf("Cannot resolve ts: %v", m1.Ts)
 	}
-	if m1.Text != "@alice has joined the channel" {
-		t.Errorf("Cannot resolve text: %q", m1.Text)
+	if len(m1.MessageTokens) != 2 {
+		t.Error("Cannot resolve first message text")
+	} else {
+		token1, _ := m1.MessageTokens[0].(MessageTokenUser)
+		if token1.User == nil {
+			t.Error("Cannot resolve first message user")
+		}
 	}
 
-	m2 := messages[3].Resolve(userResolver)
-	if m2.Text != "Hello, @bob" {
-		t.Errorf("Cannot resolve text: %q", m2.Text)
+	m2 := resolver.Resolve(&messages[3])
+	if m2.Ts.Before(time.Date(2016, 5, 13, 8, 43, 58, 0, time.UTC)) ||
+		m2.Ts.After(time.Date(2016, 5, 13, 8, 43, 59, 0, time.UTC)) {
+		t.Errorf("Cannot resolve ts: %v", m2.Ts)
 	}
 }
