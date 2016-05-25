@@ -63,11 +63,11 @@ type ChunkInfo struct {
 	End         time.Time
 }
 
-func ToChunkInfo(channelName string, chunk []MessageResolved) ChunkInfo {
+func ToChunkInfo(channelName string, chunk []Message) ChunkInfo {
 	info := new(ChunkInfo)
 	info.ChannelName = channelName
 	info.NumMessages = len(chunk)
-	info.Start = chunk[0].Ts
-	info.End = chunk[len(chunk)-1].Ts
+	info.Start = SlackTsToTime(chunk[0].Ts)
+	info.End = SlackTsToTime(chunk[len(chunk)-1].Ts)
 	return *info
 }

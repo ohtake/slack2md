@@ -2,7 +2,9 @@ package main
 
 import (
 	"regexp"
+	"strconv"
 	"strings"
+	"time"
 )
 
 // Slack message format is described at https://api.slack.com/docs/formatting
@@ -69,4 +71,11 @@ func (p *SlackMessageParser) parseLink(linkText string) {
 	default:
 		p.listener.OnLink(splits[0], alt)
 	}
+}
+
+func SlackTsToTime(timestamp string) time.Time {
+	f, _ := strconv.ParseFloat(timestamp, 64)
+	sec := int64(f)
+	nsec := int64((f - float64(sec)) * 1000000)
+	return time.Unix(sec, nsec)
 }

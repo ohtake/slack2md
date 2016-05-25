@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+	"time"
 )
 
 type recordableListner struct {
@@ -122,5 +123,32 @@ func TestSlackMessageParser(t *testing.T) {
 		parser.Parse(c.input)
 
 		actual.testEquals(c.expected, t)
+	}
+}
+
+func TestSlackTsToTime(t *testing.T) {
+	cases := []struct {
+		input    string
+		expected time.Time
+	}{
+		{
+			"0",
+			time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC),
+		},
+		{
+			"1463128987.000002",
+			time.Date(2016, 5, 13, 8, 43, 7, 0, time.UTC),
+		},
+	}
+	duration, _ := time.ParseDuration("1s")
+
+	for _, c := range cases {
+		actual := SlackTsToTime(c.input)
+		if actual.Before(c.expected) {
+			t.Errorf("Too early ts: %v, %v", actual, c.expected)
+		}
+		if actual.After(c.expected.Add(duration)) {
+			t.Errorf("Too late ts: %v, %v", actual, c.expected.Add(duration))
+		}
 	}
 }

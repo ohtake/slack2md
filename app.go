@@ -67,7 +67,7 @@ func main() {
 			pageNumber++
 			messagesResolved := resolveMessages(chunk, resolver)
 			createHistory(ch, pageNumber, messagesResolved)
-			chunks = append(chunks, ToChunkInfo(ch.Name, messagesResolved))
+			chunks = append(chunks, ToChunkInfo(ch.Name, chunk))
 		}
 		createChannel(ch, chunks)
 	}

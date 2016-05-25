@@ -1,7 +1,6 @@
 package main
 
 import (
-	"strconv"
 	"time"
 )
 
@@ -117,10 +116,7 @@ func (r *Resolver) Resolve(m *Message) MessageResolved {
 	}
 	res.BotId = m.BotId
 
-	ts, _ := strconv.ParseFloat(m.Ts, 64)
-	sec := int64(ts)
-	nsec := int64((ts - float64(sec)) * 1000000)
-	res.Ts = time.Unix(sec, nsec)
+	res.Ts = SlackTsToTime(m.Ts)
 
 	messageListner := newMessageTokenListener(r)
 	NewSlackMessageParser(messageListner).Parse(m.Text)
