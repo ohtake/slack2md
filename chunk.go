@@ -4,8 +4,12 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	"sort"
+	"time"
 )
 
+// ChunkedHistoryReader reads Slack history json into a chunk.
+// Reading whole history may eventually malloc all computer storage.
+// Keep in mind that chunks should be garbage-collectable after use.
 type ChunkedHistoryReader struct {
 	ChunkSize        int
 	ChannelDirectory string
@@ -48,4 +52,22 @@ func (r *ChunkedHistoryReader) NextChunk() []Message {
 		}
 	}
 	return messages
+}
+
+// ChunkInfo contains information about a chunk.
+// It does not contain messages and its memory usage is O(1).
+type ChunkInfo struct {
+	ChannelName string
+	NumMessages int
+	Start       time.Time
+	End         time.Time
+}
+
+func ToChunkInfo(channelName string, chunk []MessageResolved) ChunkInfo {
+	info := new(ChunkInfo)
+	info.ChannelName = channelName
+	info.NumMessages = len(chunk)
+	info.Start = chunk[0].Ts
+	info.End = chunk[len(chunk)-1].Ts
+	return *info
 }

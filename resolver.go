@@ -89,13 +89,6 @@ func newMessageTokenListener(r *Resolver) *messageTokenListener {
 	return &messageTokenListener{r, nil}
 }
 
-type ChunkInfo struct {
-	ChannelName string
-	NumMessages int
-	Start       time.Time
-	End         time.Time
-}
-
 func NewResolver(channels []Channel, users []User) *Resolver {
 	r := new(Resolver)
 	r.channels = make(map[string]*Channel)
@@ -134,13 +127,4 @@ func (r *Resolver) Resolve(m *Message) MessageResolved {
 	res.MessageTokens = messageListner.Tokens
 
 	return *res
-}
-
-func ToChunkInfo(channelName string, chunk []MessageResolved) ChunkInfo {
-	info := new(ChunkInfo)
-	info.ChannelName = channelName
-	info.NumMessages = len(chunk)
-	info.Start = chunk[0].Ts
-	info.End = chunk[len(chunk)-1].Ts
-	return *info
 }
