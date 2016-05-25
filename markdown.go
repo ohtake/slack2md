@@ -1,8 +1,8 @@
 package main
 
 import (
+	"fmt"
 	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -18,10 +18,10 @@ func (f *MarkdownTranslator) FileNameIndex() string {
 	return "index.md"
 }
 func (f *MarkdownTranslator) FileNameChannel(channelName string) string {
-	return "channel--" + channelName + ".md"
+	return fmt.Sprintf("channel--%v.md", channelName)
 }
 func (f *MarkdownTranslator) FileNameHistory(channelName string, chunkNumber int) string {
-	return "history--" + channelName + "--" + strconv.FormatInt(int64(chunkNumber), 10) + ".md"
+	return fmt.Sprintf("history--%v--%v.md", channelName, chunkNumber)
 }
 
 var mdSpecialCharsRegexp = regexp.MustCompile("[\\\\\\[\\]#*!<>`]")
@@ -48,7 +48,7 @@ func (t *MarkdownTranslator) ToChannelList(channels []Channel) []string {
 	for _, ch := range channels {
 		text := "#" + ch.Name
 		link := t.FileNameChannel(ch.Name)
-		result = append(result, "* ["+t.Escape(text)+"]("+link+")")
+		result = append(result, fmt.Sprintf("* [%v](%v)", t.Escape(text), link))
 	}
 	result = append(result, "")
 	return result
@@ -57,9 +57,9 @@ func (t *MarkdownTranslator) ToChannelList(channels []Channel) []string {
 func (t *MarkdownTranslator) ToChunkList(chunks []ChunkInfo) []string {
 	result := make([]string, 0, len(chunks)+1)
 	for i, ch := range chunks {
-		text := strconv.FormatInt(int64(i+1), 10) + " (" + ch.Start.String() + " - " + ch.End.String() + ")"
+		text := fmt.Sprintf("%v (%v - %v)", i+1, ch.Start, ch.End)
 		link := t.FileNameHistory(ch.ChannelName, i+1)
-		result = append(result, "* ["+t.Escape(text)+"]("+link+")")
+		result = append(result, fmt.Sprintf("* [%v](%v)", t.Escape(text), link))
 	}
 	result = append(result, "")
 	return result
@@ -86,7 +86,7 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 			case MessageTokenText:
 				md = append(md, token.Text)
 			case MessageTokenLink:
-				md = append(md, "["+t.Escape(token.Text)+"]("+token.Href+")")
+				md = append(md, fmt.Sprintf("[%v](%v)", t.Escape(token.Text), token.Href))
 			case MessageTokenChannel:
 				md = append(md, "#"+token.Text)
 			case MessageTokenUser:

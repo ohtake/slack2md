@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path"
-	"strconv"
 )
 
 const chunkSize = 500
@@ -38,7 +38,7 @@ func createHistory(channel Channel, pageNumber int, messages []MessageResolved) 
 	w := NewTranslatingWriter(translator, f)
 	defer w.Flush()
 
-	w.WriteHeading(1, "Channel #"+channel.Name+" ("+strconv.FormatInt(int64(pageNumber), 10)+")")
+	w.WriteHeading(1, fmt.Sprintf("Channel #%v (%v)", channel.Name, pageNumber))
 	w.WriteMessageList(messages)
 }
 
