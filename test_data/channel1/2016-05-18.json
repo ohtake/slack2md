@@ -4,5 +4,13 @@
         "user": "U00000002",
         "text": "Hello",
         "ts": "1463564356.000010"
+    },
+    {
+        "text": "Hello <@U00000002|bob>",
+        "username": "bot-name",
+        "bot_id": "B00000001",
+        "type": "message",
+        "subtype": "bot_message",
+        "ts": "1463564356.595611"
     }
 ]

@@ -12,6 +12,7 @@ type Resolver struct {
 
 type MessageResolved struct {
 	User          *User
+	BotId         string
 	MessageTokens []MessageToken
 	Ts            time.Time
 }
@@ -118,7 +119,10 @@ func (r *Resolver) ResolveChannel(channelId string) *Channel {
 func (r *Resolver) Resolve(m *Message) MessageResolved {
 	res := new(MessageResolved)
 
-	res.User = r.ResolveUser(m.User)
+	if "" != m.User {
+		res.User = r.ResolveUser(m.User)
+	}
+	res.BotId = m.BotId
 
 	ts, _ := strconv.ParseFloat(m.Ts, 64)
 	sec := int64(ts)

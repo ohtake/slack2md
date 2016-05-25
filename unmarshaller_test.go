@@ -48,12 +48,10 @@ func TestReadUsers(t *testing.T) {
 }
 
 func TestReadHistory(t *testing.T) {
-	actual := ReadHistory("test_data/channel1/2016-05-13.json")
+	actual := ReadHistory("test_data/channel1/2016-05-18.json")
 	expected := []Message{
-		{"U00000001", "<@U00000001|alice> has joined the channel", "1463128987.000002"},
-		{"U00000001", "<@U00000001|alice> set the channel purpose: ", "1463128989.000003"},
-		{"U00000002", "<@U00000002|bob> has joined the channel", "1463128989.000004"},
-		{"U00000001", "Hello, <@U00000002>", "1463129038.000008"},
+		{"U00000002", "", "Hello", "1463564356.000010"},
+		{"", "B00000001", "Hello <@U00000002|bob>", "1463564356.595611"},
 	}
 	if len(actual) != len(expected) {
 		t.Errorf("Wrong length: %d, %d", len(actual), len(expected))
@@ -62,6 +60,9 @@ func TestReadHistory(t *testing.T) {
 	for i := 0; i < len(expected); i++ {
 		if actual[i].User != expected[i].User {
 			t.Errorf("Wrong User: %q, %q", actual[i].User, expected[i].User)
+		}
+		if actual[i].BotId != expected[i].BotId {
+			t.Errorf("Wrong BotId: %q, %q", actual[i].BotId, expected[i].BotId)
 		}
 		if actual[i].Text != expected[i].Text {
 			t.Errorf("Wrong Text: %q, %q", actual[i].Text, expected[i].Text)

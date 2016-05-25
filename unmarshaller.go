@@ -17,9 +17,10 @@ type User struct {
 }
 
 type Message struct {
-	User string `json:"user"`
-	Text string `json:"text"`
-	Ts   string `json:"ts"`
+	User  string `json:"user"`
+	BotId string `json:"bot_id"`
+	Text  string `json:"text"`
+	Ts    string `json:"ts"`
 }
 
 func ReadChannels(channel_json_filename string) []Channel {

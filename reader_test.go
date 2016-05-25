@@ -5,8 +5,8 @@ import (
 )
 
 func TestChunkedHistoryReader(t *testing.T) {
-	reader := NewChunkedHistoryReader(3, "test_data/channel1")
-	expected_chunk_sizes := []int{3, 2}
+	reader := NewChunkedHistoryReader(4, "test_data/channel1")
+	expected_chunk_sizes := []int{4, 2}
 	actual := make([][]Message, 0)
 	for c := reader.NextChunk(); len(c) > 0; c = reader.NextChunk() {
 		actual = append(actual, c)
@@ -27,7 +27,7 @@ func TestChunkedHistoryReader(t *testing.T) {
 	}
 	lastChunk := actual[len(actual)-1]
 	last := lastChunk[len(lastChunk)-1]
-	if last.Text != "Hello" {
+	if last.Text != "Hello <@U00000002|bob>" {
 		t.Errorf("Wrong last message: %v", last.Text)
 	}
 }

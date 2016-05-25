@@ -70,7 +70,15 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 	for _, m := range chunk {
 		md := make([]string, 0, 1+len(m.MessageTokens))
 		header := m.Ts.String()
-		md = append(md, "* "+header+": ")
+		if nil != m.User {
+			header += " @" + m.User.Name
+		} else if "" != m.BotId {
+			header += " (BOT)" + m.BotId
+		} else {
+			// `subtype=file_comment` does not have `user` or `bot_id`
+		}
+		header += ": "
+		md = append(md, "* "+header)
 		for _, token := range m.MessageTokens {
 			switch token := token.(type) {
 			case MessageTokenNewLine:
