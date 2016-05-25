@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"time"
 )
 
 type MarkdownTranslator struct {
@@ -57,7 +58,7 @@ func (t *MarkdownTranslator) ToChannelList(channels []Channel) []string {
 func (t *MarkdownTranslator) ToChunkList(chunks []ChunkInfo) []string {
 	result := make([]string, 0, len(chunks)+1)
 	for i, ch := range chunks {
-		text := fmt.Sprintf("%v (%v - %v)", i+1, ch.Start, ch.End)
+		text := fmt.Sprintf("%v (%v - %v)", i+1, toTimeStampString(ch.Start), toTimeStampString(ch.End))
 		link := t.FileNameHistory(ch.ChannelName, i+1)
 		result = append(result, fmt.Sprintf("* [%v](%v)", t.Escape(text), link))
 	}
@@ -69,7 +70,7 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 	result := make([]string, 0, len(chunk)+1)
 	for _, m := range chunk {
 		md := make([]string, 0, 1+len(m.MessageTokens))
-		header := m.Ts.String()
+		header := toTimeStampString(m.Ts)
 		if nil != m.User {
 			header += " @" + m.User.Name
 		} else if "" != m.BotId {
@@ -101,4 +102,8 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 	}
 	result = append(result, "")
 	return result
+}
+
+func toTimeStampString(ts time.Time) string {
+	return ts.UTC().Format(time.RFC3339)
 }
