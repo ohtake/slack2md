@@ -25,7 +25,7 @@ func (f *MarkdownTranslator) FileNameHistory(channelName string, chunkNumber int
 	return fmt.Sprintf("history--%v--%v.md", channelName, chunkNumber)
 }
 
-var mdSpecialCharsRegexp = regexp.MustCompile("[\\\\\\[\\]#*!<>`]")
+var mdSpecialCharsRegexp = regexp.MustCompile("[\\\\\\[\\]#*!<>`|]")
 var mdSpecialCharsReplacer = func(matched string) string {
 	return "\\" + matched
 }
@@ -99,6 +99,18 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 			}
 		}
 		result = append(result, strings.Join(md, ""))
+	}
+	result = append(result, "")
+	return result
+}
+
+func (t *MarkdownTranslator) ToUserTable(users []User) []string {
+	result := make([]string, 0, len(users)+2+1)
+	result = append(result, "|ID|Icon|Name|Email|FirstName|LastName|Title|")
+	result = append(result, strings.Repeat("|----", 7)+"|")
+	for _, u := range users {
+		vals := []string{u.Id, "![](" + u.Profile.Image24 + ")", u.Name, u.Profile.Email, t.Escape(u.Profile.FirstName), t.Escape(u.Profile.LastName), t.Escape(u.Profile.Title)}
+		result = append(result, "|"+strings.Join(vals, "|")+"|")
 	}
 	result = append(result, "")
 	return result

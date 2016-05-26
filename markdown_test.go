@@ -26,7 +26,7 @@ func TestMarkdownEscape(t *testing.T) {
 		input    string
 	}{
 		{"plain text", "plain text"},
-		{"\\#\\[\\]\\<\\>\\\\\\!\\*\\`", "#[]<>\\!*`"},
+		{"\\#\\[\\]\\<\\>\\\\\\!\\*\\`\\|", "#[]<>\\!*`|"},
 	}
 	for _, c := range cases {
 		actual := m.Escape(c.input)
@@ -67,5 +67,9 @@ func TestMarkdownChunkList(t *testing.T) {
 }
 
 func TestMarkdownMessageList(t *testing.T) {
+	// TODO
+}
+
+func TestMarkdownUserTable(t *testing.T) {
 	// TODO
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -30,8 +31,8 @@ func TestReadChannels(t *testing.T) {
 func TestReadUsers(t *testing.T) {
 	actual := ReadUsers("test_data/users.json")
 	expected := []User{
-		{"U00000001", "alice"},
-		{"U00000002", "bob"},
+		{"U00000001", "alice", UserProfile{"alice.doe@example.com", "Alice", "Doe", "Alice Doe", "Alice Doe", "title1", "https://avatars.slack-edge.com/2016-04-27/00000000000_01234567890abcdef012_24.jpg"}},
+		{"U00000002", "bob", UserProfile{"bob.doe@example.com", "Bob", "Doe", "Bob Doe", "Bob Doe", "title2", "https://secure.gravatar.com/avatar/0123456789abcdef0123456789abcdef.jpg?s=24&d=https%3A%2F%2Fa.slack-edge.com%2F66f9%2Fimg%2Favatars%2Fava_0002-24.png"}},
 	}
 	if len(actual) != len(expected) {
 		t.Errorf("Wrong length: %d, %d", len(actual), len(expected))
@@ -43,6 +44,9 @@ func TestReadUsers(t *testing.T) {
 		}
 		if actual[i].Name != expected[i].Name {
 			t.Errorf("Wrong Name: %q, %q", actual[i].Name, expected[i].Name)
+		}
+		if !reflect.DeepEqual(actual[i].Profile, expected[i].Profile) {
+			t.Errorf("Wrong Profile: %v, %v", actual[i].Profile, expected[i].Profile)
 		}
 	}
 }

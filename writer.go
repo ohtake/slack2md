@@ -14,6 +14,7 @@ type Translator interface {
 	ToChannelList(channels []Channel) []string
 	ToChunkList(chunks []ChunkInfo) []string
 	ToMessageList(chunk []MessageResolved) []string
+	ToUserTable(users []User) []string
 }
 
 type TranslatingWriter struct {
@@ -53,6 +54,9 @@ func (w *TranslatingWriter) WriteChunkList(chunks []ChunkInfo) error {
 }
 func (w *TranslatingWriter) WriteMessageList(chunk []MessageResolved) error {
 	return w.writeLines(w.translator.ToMessageList(chunk))
+}
+func (w *TranslatingWriter) WriteUserTable(users []User) error {
+	return w.writeLines(w.translator.ToUserTable(users))
 }
 
 func (w *TranslatingWriter) Flush() error {

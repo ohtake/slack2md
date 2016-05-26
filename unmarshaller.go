@@ -12,8 +12,18 @@ type Channel struct {
 }
 
 type User struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
+	Id      string      `json:"id"`
+	Name    string      `json:"name"`
+	Profile UserProfile `json:"profile"`
+}
+type UserProfile struct {
+	Email              string `json:"email"`
+	FirstName          string `json:"first_name"`
+	LastName           string `json:"last_name"`
+	ReamName           string `json:"real_name"`
+	ReamNameNormalized string `json:"real_name_normalized"`
+	Title              string `json:"Title"`
+	Image24            string `json:"image_24"`
 }
 
 type Message struct {

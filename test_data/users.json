@@ -25,7 +25,7 @@
             "fields": [
 
             ],
-            "title": "",
+            "title": "title1",
             "phone": "",
             "skype": "",
             "real_name": "Alice Doe",
@@ -57,7 +57,7 @@
             ],
             "first_name": "Bob",
             "last_name": "Doe",
-            "title": "",
+            "title": "title2",
             "phone": "",
             "skype": "",
             "real_name": "Bob Doe",

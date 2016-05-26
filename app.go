@@ -12,14 +12,17 @@ const outputDir = "output"
 
 var translator = NewMarkdownTranslator()
 
-func createIndex(channels []Channel) {
+func createIndex(channels []Channel, users []User) {
 	f, _ := os.Create(path.Join(outputDir, translator.FileNameIndex()))
 	defer f.Close()
 	w := NewTranslatingWriter(translator, f)
 	defer w.Flush()
 
 	w.WriteHeading(1, "Exported Slack")
+	w.WriteHeading(2, "Channels")
 	w.WriteChannelList(channels)
+	w.WriteHeading(2, "Users")
+	w.WriteUserTable(users)
 }
 
 func createChannel(channel Channel, chunks []ChunkInfo) {
@@ -57,7 +60,7 @@ func main() {
 	users := ReadUsers(path.Join(inputDir, "users.json"))
 	resolver := NewResolver(channels, users)
 
-	createIndex(channels)
+	createIndex(channels, users)
 
 	for _, ch := range channels {
 		pageNumber := 0
