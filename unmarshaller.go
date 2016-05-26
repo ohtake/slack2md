@@ -22,7 +22,7 @@ type UserProfile struct {
 	LastName           string `json:"last_name"`
 	ReamName           string `json:"real_name"`
 	ReamNameNormalized string `json:"real_name_normalized"`
-	Title              string `json:"Title"`
+	Title              string `json:"title"`
 	Image24            string `json:"image_24"`
 }
 
