@@ -115,8 +115,8 @@ func (t *MarkdownTranslator) ToUserTable(users []User) []string {
 	result = append(result, "|ID|Icon|Name|Email|FirstName|LastName|Title|")
 	result = append(result, strings.Repeat("|----", 7)+"|")
 	for _, u := range users {
-		vals := []string{u.ID, "![](" + u.Profile.Image24 + ")", u.Name, u.Profile.Email, t.Escape(u.Profile.FirstName), t.Escape(u.Profile.LastName), t.Escape(u.Profile.Title)}
-		result = append(result, "|"+strings.Join(vals, "|")+"|")
+		vals := []string{u.ID, "![x](" + u.Profile.Image24 + ")", u.Name, u.Profile.Email, t.Escape(u.Profile.FirstName), t.Escape(u.Profile.LastName), t.Escape(u.Profile.Title)}
+		result = append(result, "| "+strings.Join(vals, " | ")+" |")
 	}
 	result = append(result, "")
 	return result
