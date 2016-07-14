@@ -37,7 +37,7 @@ func TestResolveMessage(t *testing.T) {
 
 	m1 := resolver.Resolve(&messages[0])
 	if m1.User.Name != "alice" {
-		t.Errorf("Cannot resolve user: %q, &q", m1.User.Name, "alice")
+		t.Errorf("Cannot resolve user: %q, %q", m1.User.Name, "alice")
 	}
 	if m1.Ts.Before(time.Date(2016, 5, 13, 8, 43, 7, 0, time.UTC)) ||
 		m1.Ts.After(time.Date(2016, 5, 13, 8, 43, 8, 0, time.UTC)) {
