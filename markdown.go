@@ -15,22 +15,22 @@ func NewMarkdownTranslator() *MarkdownTranslator {
 	return r
 }
 
-func (f *MarkdownTranslator) FileNameIndex() string {
+func (t *MarkdownTranslator) FileNameIndex() string {
 	return "index.md"
 }
-func (f *MarkdownTranslator) FileNameChannel(channelName string) string {
+func (t *MarkdownTranslator) FileNameChannel(channelName string) string {
 	return fmt.Sprintf("channel--%v.md", channelName)
 }
-func (f *MarkdownTranslator) FileNameHistory(channelName string, chunkNumber int) string {
+func (t *MarkdownTranslator) FileNameHistory(channelName string, chunkNumber int) string {
 	return fmt.Sprintf("history--%v--%v.md", channelName, chunkNumber)
 }
 
-var mdSpecialCharsRegexp = regexp.MustCompile("[\\\\\\[\\]#*!<>`|]")
+var mdSpecialCharsRegexp = regexp.MustCompile(`[\\\[\]#*!<>` + "`" + `|]`)
 var mdSpecialCharsReplacer = func(matched string) string {
 	return "\\" + matched
 }
 
-func (_ *MarkdownTranslator) Escape(text string) string {
+func (t *MarkdownTranslator) Escape(text string) string {
 	result := text
 	result = mdSpecialCharsRegexp.ReplaceAllStringFunc(result, mdSpecialCharsReplacer)
 	// TODO needs more for escaping
@@ -73,8 +73,8 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 		header := toTimeStampString(m.Ts)
 		if nil != m.User {
 			header += " @" + m.User.Name
-		} else if "" != m.BotId {
-			header += " (BOT)" + m.BotId
+		} else if "" != m.BotID {
+			header += " (BOT)" + m.BotID
 		} else {
 			// `subtype=file_comment` does not have `user` or `bot_id`
 		}
@@ -109,7 +109,7 @@ func (t *MarkdownTranslator) ToUserTable(users []User) []string {
 	result = append(result, "|ID|Icon|Name|Email|FirstName|LastName|Title|")
 	result = append(result, strings.Repeat("|----", 7)+"|")
 	for _, u := range users {
-		vals := []string{u.Id, "![](" + u.Profile.Image24 + ")", u.Name, u.Profile.Email, t.Escape(u.Profile.FirstName), t.Escape(u.Profile.LastName), t.Escape(u.Profile.Title)}
+		vals := []string{u.ID, "![](" + u.Profile.Image24 + ")", u.Name, u.Profile.Email, t.Escape(u.Profile.FirstName), t.Escape(u.Profile.LastName), t.Escape(u.Profile.Title)}
 		result = append(result, "|"+strings.Join(vals, "|")+"|")
 	}
 	result = append(result, "")

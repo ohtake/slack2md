@@ -50,14 +50,14 @@ func (l *recordableListner) OnNewLine() {
 func (l *recordableListner) OnText(text string) {
 	l.addRecord(rtText, text, "")
 }
-func (l *recordableListner) OnUser(userId, alt string) {
-	l.addRecord(rtUser, alt, userId)
+func (l *recordableListner) OnUser(userID, alt string) {
+	l.addRecord(rtUser, alt, userID)
 }
-func (l *recordableListner) OnChannel(channelId, alt string) {
-	l.addRecord(rtChannel, alt, channelId)
+func (l *recordableListner) OnChannel(channelID, alt string) {
+	l.addRecord(rtChannel, alt, channelID)
 }
-func (l *recordableListner) OnVariable(variableId, alt string) {
-	l.addRecord(rtVariable, alt, variableId)
+func (l *recordableListner) OnVariable(variableID, alt string) {
+	l.addRecord(rtVariable, alt, variableID)
 }
 func (l *recordableListner) OnLink(href, text string) {
 	l.addRecord(rtLink, text, href)

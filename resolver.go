@@ -11,7 +11,7 @@ type Resolver struct {
 
 type MessageResolved struct {
 	User          *User
-	BotId         string
+	BotID         string
 	MessageTokens []MessageToken
 	Ts            time.Time
 }
@@ -60,28 +60,28 @@ func (l *messageTokenListener) OnLink(href, text string) {
 	}
 	l.add(MessageTokenLink{href, text2})
 }
-func (l *messageTokenListener) OnChannel(channelId, alt string) {
-	channel := l.resolver.ResolveChannel(channelId)
+func (l *messageTokenListener) OnChannel(channelID, alt string) {
+	channel := l.resolver.ResolveChannel(channelID)
 	text := alt
 	if "" == text {
 		text = channel.Name
 	}
 	l.add(MessageTokenChannel{channel, text})
 }
-func (l *messageTokenListener) OnUser(userId, alt string) {
-	user := l.resolver.ResolveUser(userId)
+func (l *messageTokenListener) OnUser(userID, alt string) {
+	user := l.resolver.ResolveUser(userID)
 	text := alt
 	if "" == text {
 		text = user.Name
 	}
 	l.add(MessageTokenUser{user, text})
 }
-func (l *messageTokenListener) OnVariable(variableId, alt string) {
+func (l *messageTokenListener) OnVariable(variableID, alt string) {
 	text := alt
 	if "" == text {
-		text = variableId
+		text = variableID
 	}
-	l.add(MessageTokenVariable{variableId, text})
+	l.add(MessageTokenVariable{variableID, text})
 }
 
 func newMessageTokenListener(r *Resolver) *messageTokenListener {
@@ -92,20 +92,20 @@ func NewResolver(channels []Channel, users []User) *Resolver {
 	r := new(Resolver)
 	r.channels = make(map[string]*Channel)
 	for i, c := range channels {
-		r.channels[c.Id] = &channels[i]
+		r.channels[c.ID] = &channels[i]
 	}
 	r.users = make(map[string]*User)
 	for i, u := range users {
-		r.users[u.Id] = &users[i]
+		r.users[u.ID] = &users[i]
 	}
 	return r
 }
 
-func (r *Resolver) ResolveUser(userId string) *User {
-	return r.users[userId]
+func (r *Resolver) ResolveUser(userID string) *User {
+	return r.users[userID]
 }
-func (r *Resolver) ResolveChannel(channelId string) *Channel {
-	return r.channels[channelId]
+func (r *Resolver) ResolveChannel(channelID string) *Channel {
+	return r.channels[channelID]
 }
 
 func (r *Resolver) Resolve(m *Message) MessageResolved {
@@ -114,7 +114,7 @@ func (r *Resolver) Resolve(m *Message) MessageResolved {
 	if "" != m.User {
 		res.User = r.ResolveUser(m.User)
 	}
-	res.BotId = m.BotId
+	res.BotID = m.BotID
 
 	res.Ts = SlackTsToTime(m.Ts)
 

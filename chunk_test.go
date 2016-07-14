@@ -6,7 +6,7 @@ import (
 
 func readAllChunks(chunkSize int, channelDirectory string) [][]Message {
 	reader := NewChunkedHistoryReader(chunkSize, channelDirectory)
-	chunks := make([][]Message, 0)
+	var chunks [][]Message
 	for c := reader.NextChunk(); len(c) > 0; c = reader.NextChunk() {
 		chunks = append(chunks, c)
 	}
@@ -15,14 +15,14 @@ func readAllChunks(chunkSize int, channelDirectory string) [][]Message {
 
 func TestChunkedHistoryReader(t *testing.T) {
 	actual := readAllChunks(4, "test_data/channel1")
-	expected_chunk_sizes := []int{4, 2}
-	if len(expected_chunk_sizes) != len(actual) {
-		t.Errorf("Wrong length: %d, %d", len(expected_chunk_sizes), len(actual))
+	expectedChunkSizes := []int{4, 2}
+	if len(expectedChunkSizes) != len(actual) {
+		t.Errorf("Wrong length: %d, %d", len(expectedChunkSizes), len(actual))
 		t.FailNow()
 	}
-	for i := 0; i < len(expected_chunk_sizes); i++ {
-		if expected_chunk_sizes[i] != len(actual[i]) {
-			t.Errorf("Wrong length: %d, %d", expected_chunk_sizes[i], len(actual[i]))
+	for i := 0; i < len(expectedChunkSizes); i++ {
+		if expectedChunkSizes[i] != len(actual[i]) {
+			t.Errorf("Wrong length: %d, %d", expectedChunkSizes[i], len(actual[i]))
 			t.FailNow()
 		}
 	}

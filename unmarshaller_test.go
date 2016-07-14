@@ -16,8 +16,8 @@ func TestReadChannels(t *testing.T) {
 		t.FailNow()
 	}
 	for i := 0; i < len(expected); i++ {
-		if actual[i].Id != expected[i].Id {
-			t.Errorf("Wrong Id: %q, %q", actual[i].Id, expected[i].Id)
+		if actual[i].ID != expected[i].ID {
+			t.Errorf("Wrong Id: %q, %q", actual[i].ID, expected[i].ID)
 		}
 		if actual[i].Name != expected[i].Name {
 			t.Errorf("Wrong Name: %q, %q", actual[i].Name, expected[i].Name)
@@ -39,8 +39,8 @@ func TestReadUsers(t *testing.T) {
 		t.FailNow()
 	}
 	for i := 0; i < len(expected); i++ {
-		if actual[i].Id != expected[i].Id {
-			t.Errorf("Wrong Id: %q, %q", actual[i].Id, expected[i].Id)
+		if actual[i].ID != expected[i].ID {
+			t.Errorf("Wrong Id: %q, %q", actual[i].ID, expected[i].ID)
 		}
 		if actual[i].Name != expected[i].Name {
 			t.Errorf("Wrong Name: %q, %q", actual[i].Name, expected[i].Name)
@@ -65,8 +65,8 @@ func TestReadHistory(t *testing.T) {
 		if actual[i].User != expected[i].User {
 			t.Errorf("Wrong User: %q, %q", actual[i].User, expected[i].User)
 		}
-		if actual[i].BotId != expected[i].BotId {
-			t.Errorf("Wrong BotId: %q, %q", actual[i].BotId, expected[i].BotId)
+		if actual[i].BotID != expected[i].BotID {
+			t.Errorf("Wrong BotID: %q, %q", actual[i].BotID, expected[i].BotID)
 		}
 		if actual[i].Text != expected[i].Text {
 			t.Errorf("Wrong Text: %q, %q", actual[i].Text, expected[i].Text)

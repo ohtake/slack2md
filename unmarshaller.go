@@ -6,13 +6,13 @@ import (
 )
 
 type Channel struct {
-	Id      string `json:"id"`
+	ID      string `json:"id"`
 	Name    string `json:"name"`
 	Created string `json:"created"`
 }
 
 type User struct {
-	Id      string      `json:"id"`
+	ID      string      `json:"id"`
 	Name    string      `json:"name"`
 	Profile UserProfile `json:"profile"`
 }
@@ -28,28 +28,28 @@ type UserProfile struct {
 
 type Message struct {
 	User  string `json:"user"`
-	BotId string `json:"bot_id"`
+	BotID string `json:"bot_id"`
 	Text  string `json:"text"`
 	Ts    string `json:"ts"`
 }
 
-func ReadChannels(channel_json_filename string) []Channel {
+func ReadChannels(channelJSONFilename string) []Channel {
 	var channels []Channel
-	body, _ := ioutil.ReadFile(channel_json_filename)
+	body, _ := ioutil.ReadFile(channelJSONFilename)
 	_ = json.Unmarshal(body, &channels)
 	return channels
 }
 
-func ReadUsers(user_json_filename string) []User {
+func ReadUsers(userJSONFilename string) []User {
 	var users []User
-	body, _ := ioutil.ReadFile(user_json_filename)
+	body, _ := ioutil.ReadFile(userJSONFilename)
 	_ = json.Unmarshal(body, &users)
 	return users
 }
 
-func ReadHistory(history_json_filename string) []Message {
+func ReadHistory(historyJSONFilename string) []Message {
 	var messages []Message
-	body, _ := ioutil.ReadFile(history_json_filename)
+	body, _ := ioutil.ReadFile(historyJSONFilename)
 	_ = json.Unmarshal(body, &messages)
 	return messages
 }

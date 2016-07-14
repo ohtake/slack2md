@@ -64,7 +64,7 @@ func main() {
 
 	for _, ch := range channels {
 		pageNumber := 0
-		chunks := make([]ChunkInfo, 0)
+		var chunks []ChunkInfo
 		reader := NewChunkedHistoryReader(chunkSize, path.Join(inputDir, ch.Name))
 		for chunk := reader.NextChunk(); len(chunk) > 0; chunk = reader.NextChunk() {
 			pageNumber++

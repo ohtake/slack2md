@@ -12,9 +12,9 @@ import (
 type SlackMessageListener interface {
 	OnNewLine()
 	OnText(text string)
-	OnUser(userId string, alt string)
-	OnChannel(channelId string, alt string)
-	OnVariable(variableId string, alt string)
+	OnUser(userID string, alt string)
+	OnChannel(channelID string, alt string)
+	OnVariable(variableID string, alt string)
 	OnLink(href string, text string)
 }
 
