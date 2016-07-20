@@ -26,3 +26,6 @@ _testmain.go
 # Slack related files
 /slack_export
 /output
+
+# Coverage
+/coverage.txt
