@@ -63,11 +63,33 @@ func TestMarkdownChannelList(t *testing.T) {
 }
 
 func TestMarkdownChunkList(t *testing.T) {
-	// TODO
+	m := NewMarkdownTranslator()
+	chunkInfos := ReadAllChunksAsInfo(3, "test_data/channel1")
+	actual := m.ToChunkList(chunkInfos)
+	testLines(t, actual, []string{
+		"* [1 (2016-05-13T08:43:07Z - 2016-05-13T08:43:09Z)](history--channel1--1.md)",
+		"* [2 (2016-05-13T08:43:58Z - 2016-05-18T09:39:16Z)](history--channel1--2.md)",
+		"",
+	})
 }
 
 func TestMarkdownMessageList(t *testing.T) {
-	// TODO
+	channels := ReadChannels("test_data/channels.json")
+	users := ReadUsers("test_data/users.json")
+	resolver := NewResolver(channels, users)
+	chunks := ReadAllChunks(3, "test_data/channel1")
+	resolvedMessages := make([]MessageResolved, 0, len(chunks[0]))
+	for _, m := range chunks[0] {
+		resolvedMessages = append(resolvedMessages, resolver.Resolve(&m))
+	}
+	m := NewMarkdownTranslator()
+	actual := m.ToMessageList(resolvedMessages)
+	testLines(t, actual, []string{
+		"* 2016-05-13T08:43:07Z @alice: @alice has joined the channel",
+		"* 2016-05-13T08:43:09Z @alice: @alice set the channel purpose: ",
+		"* 2016-05-13T08:43:09Z @bob: @bob has joined the channel",
+		"",
+	})
 }
 
 func TestMarkdownUserTable(t *testing.T) {

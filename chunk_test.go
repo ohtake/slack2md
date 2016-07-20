@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func readAllChunks(chunkSize int, channelDirectory string) [][]Message {
+func ReadAllChunks(chunkSize int, channelDirectory string) [][]Message {
 	reader := NewChunkedHistoryReader(chunkSize, channelDirectory)
 	var chunks [][]Message
 	for c := reader.NextChunk(); len(c) > 0; c = reader.NextChunk() {
@@ -13,8 +13,17 @@ func readAllChunks(chunkSize int, channelDirectory string) [][]Message {
 	return chunks
 }
 
+func ReadAllChunksAsInfo(chunkSize int, channelDirectory string) []ChunkInfo {
+	chunks := ReadAllChunks(chunkSize, channelDirectory)
+	chunkInfos := make([]ChunkInfo, 0, len(chunks))
+	for _, c := range chunks {
+		chunkInfos = append(chunkInfos, ToChunkInfo("channel1", c))
+	}
+	return chunkInfos
+}
+
 func TestChunkedHistoryReader(t *testing.T) {
-	actual := readAllChunks(4, "test_data/channel1")
+	actual := ReadAllChunks(4, "test_data/channel1")
 	expectedChunkSizes := []int{4, 2}
 	if len(expectedChunkSizes) != len(actual) {
 		t.Errorf("Wrong length: %d, %d", len(expectedChunkSizes), len(actual))
@@ -38,13 +47,9 @@ func TestChunkedHistoryReader(t *testing.T) {
 }
 
 func TestToChunkInfo(t *testing.T) {
-	chunks := readAllChunks(3, "test_data/channel1")
 	expectedMessageSizes := []int{3, 3}
 	expectedYear := 2016
-	actual := make([]ChunkInfo, 0, len(chunks))
-	for _, c := range chunks {
-		actual = append(actual, ToChunkInfo("channel1", c))
-	}
+	actual := ReadAllChunksAsInfo(3, "test_data/channel1")
 
 	for i := 0; i < len(actual); i++ {
 		if actual[i].NumMessages != expectedMessageSizes[i] {
