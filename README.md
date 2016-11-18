@@ -10,12 +10,14 @@ You can convert [exported Slack history json](https://get.slack.help/hc/en-us/ar
 
 * [Go](https://golang.org/doc/install)
 
-## Export
+## Usage
 
 1. [Export Slack history](https://my.slack.com/services/export) and wait its completion.
 1. Download and extract the zip file into `slack_export` directory.
+1. Execute `go build` and you will get `slack2md` executable file.
+1. Run `slack2md` and you will get Markdown files at `output` directory.
 
-## Build and publish
+## Publish markdown files to Git repository
 
 ```bash
 git checkout -B example
