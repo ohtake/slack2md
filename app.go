@@ -54,7 +54,7 @@ func resolveMessages(messages []Message, resolver *Resolver) []MessageResolved {
 }
 
 func main() {
-	_ = os.Mkdir(outputDir, os.ModeDir)
+	_ = os.Mkdir(outputDir, 0755)
 
 	channels := ReadChannels(path.Join(inputDir, "channels.json"))
 	users := ReadUsers(path.Join(inputDir, "users.json"))
