@@ -74,7 +74,7 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 		if nil != m.User {
 			header += " @" + m.User.Name
 		} else if "" != m.BotID {
-			header += " (BOT)" + m.BotID
+			header += " (APP)" + m.BotID
 		} else {
 			// `subtype=file_comment` does not have `user` or `bot_id`
 		}
