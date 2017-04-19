@@ -4,16 +4,18 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"flag"
 )
 
-const chunkSize = 500
-const inputDir = "slack_export"
-const outputDir = "output"
+var chunkSize = flag.Int("messages", 500, "Number of messages per page")
+var inputDir = flag.String("input", "slack_export", "Input directory which contains exported json files")
+var outputDir = flag.String("output", "output", "Output directory")
+var help = flag.Bool("help", false, "Print help")
 
 var translator = NewMarkdownTranslator()
 
 func createIndex(channels []Channel, users []User) {
-	f, _ := os.Create(path.Join(outputDir, translator.FileNameIndex()))
+	f, _ := os.Create(path.Join(*outputDir, translator.FileNameIndex()))
 	defer f.Close()
 	w := NewTranslatingWriter(translator, f)
 	defer w.Flush()
@@ -26,7 +28,7 @@ func createIndex(channels []Channel, users []User) {
 }
 
 func createChannel(channel Channel, chunks []ChunkInfo) {
-	f, _ := os.Create(path.Join(outputDir, translator.FileNameChannel(channel.Name)))
+	f, _ := os.Create(path.Join(*outputDir, translator.FileNameChannel(channel.Name)))
 	defer f.Close()
 	w := NewTranslatingWriter(translator, f)
 	defer w.Flush()
@@ -36,7 +38,7 @@ func createChannel(channel Channel, chunks []ChunkInfo) {
 }
 
 func createHistory(channel Channel, pageNumber int, messages []MessageResolved) {
-	f, _ := os.Create(path.Join(outputDir, translator.FileNameHistory(channel.Name, pageNumber)))
+	f, _ := os.Create(path.Join(*outputDir, translator.FileNameHistory(channel.Name, pageNumber)))
 	defer f.Close()
 	w := NewTranslatingWriter(translator, f)
 	defer w.Flush()
@@ -54,10 +56,15 @@ func resolveMessages(messages []Message, resolver *Resolver) []MessageResolved {
 }
 
 func main() {
-	_ = os.Mkdir(outputDir, 0755)
+	flag.Parse()
+	if *help {
+		flag.Usage()
+		return
+	}
+	_ = os.Mkdir(*outputDir, 0755)
 
-	channels := ReadChannels(path.Join(inputDir, "channels.json"))
-	users := ReadUsers(path.Join(inputDir, "users.json"))
+	channels := ReadChannels(path.Join(*inputDir, "channels.json"))
+	users := ReadUsers(path.Join(*inputDir, "users.json"))
 	resolver := NewResolver(channels, users)
 
 	createIndex(channels, users)
@@ -65,7 +72,7 @@ func main() {
 	for _, ch := range channels {
 		pageNumber := 0
 		var chunks []ChunkInfo
-		reader := NewChunkedHistoryReader(chunkSize, path.Join(inputDir, ch.Name))
+		reader := NewChunkedHistoryReader(*chunkSize, path.Join(*inputDir, ch.Name))
 		for chunk := reader.NextChunk(); len(chunk) > 0; chunk = reader.NextChunk() {
 			pageNumber++
 			messagesResolved := resolveMessages(chunk, resolver)
