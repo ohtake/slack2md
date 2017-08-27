@@ -12,6 +12,8 @@ import (
 type SlackMessageListener interface {
 	OnNewLine()
 	OnText(text string)
+	OnStartSubtype(text string)
+	OnEndSubtype(text string)
 	OnUser(userID string, alt string)
 	OnChannel(channelID string, alt string)
 	OnVariable(variableID string, alt string)
@@ -30,21 +32,27 @@ func NewSlackMessageParser(listener SlackMessageListener) *SlackMessageParser {
 	return p
 }
 
-func (p *SlackMessageParser) Parse(text string) {
+func (p *SlackMessageParser) Parse(text string, subtype string) {
 	lines := strings.Split(text, "\n")
 	for i, l := range lines {
-		p.parseLine(l)
+		p.parseLine(l, subtype)
 		if i+1 < len(lines) {
 			p.listener.OnNewLine()
 		}
 	}
 }
 
-func (p *SlackMessageParser) parseLine(line string) {
+func (p *SlackMessageParser) parseLine(line string, subtype string) {
+	if "" != subtype {
+		p.listener.OnStartSubtype(subtype)
+	}
 	for remainingLine := line; len(remainingLine) > 0; {
 		submatch := reLink.FindStringSubmatchIndex(remainingLine)
 		if submatch == nil {
 			p.listener.OnText(remainingLine)
+			if "" != subtype {
+				p.listener.OnEndSubtype(subtype)
+			}
 			return
 		}
 		if submatch[0] > 0 {
