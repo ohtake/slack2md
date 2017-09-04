@@ -80,6 +80,9 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 		}
 		header += ": "
 		md = append(md, "* "+header)
+		if "" != m.Subtype {
+			md = append(md, "*")
+		}
 		for _, token := range m.MessageTokens {
 			switch token := token.(type) {
 			case MessageTokenNewLine:
@@ -97,6 +100,9 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 			default:
 				panic("Unknown message type")
 			}
+		}
+		if "" != m.Subtype {
+			md = append(md, "*")
 		}
 		result = append(result, strings.Join(md, ""))
 	}

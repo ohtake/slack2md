@@ -27,10 +27,11 @@ type UserProfile struct {
 }
 
 type Message struct {
-	User  string `json:"user"`
-	BotID string `json:"bot_id"`
-	Text  string `json:"text"`
-	Ts    string `json:"ts"`
+	User    string `json:"user"`
+	BotID   string `json:"bot_id"`
+	Text    string `json:"text"`
+	Subtype string `json:"subtype"`
+	Ts      string `json:"ts"`
 }
 
 func ReadChannels(channelJSONFilename string) []Channel {
