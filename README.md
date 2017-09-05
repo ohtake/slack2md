@@ -6,6 +6,10 @@
 
 You can convert [exported Slack history json](https://get.slack.help/hc/en-us/articles/201658943-Exporting-your-team-s-Slack-history) into Markdown.
 
+## Example output
+
+See <https://github.com/ohtake/slack2md/blob/example/output/index.md>.
+
 ## Requirement
 
 * [Go](https://golang.org/doc/install)
@@ -17,14 +21,6 @@ You can convert [exported Slack history json](https://get.slack.help/hc/en-us/ar
 1. Execute `go build` and you will get `slack2md` executable file.
 1. Run `slack2md` and you will get Markdown files at `output` directory.
 
-## Publish markdown files to Git repository
+## Options
 
-```bash
-git checkout -B example
-go build
-./slack2md
-git add -f output
-git commit -m "Convert slack json into markdown"
-git push origin example -f
-git checkout -
-```
+`./slack2md -help`
