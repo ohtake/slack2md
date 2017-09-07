@@ -78,10 +78,14 @@ func (t *MarkdownTranslator) ToMessageList(chunk []MessageResolved) []string {
 		} else {
 			// `subtype=file_comment` does not have `user` or `bot_id`
 		}
-		header += ": "
-		md = append(md, "* "+header)
+		header += ":"
+		md = append(md, "* *"+header+"* ")
 		for _, token := range m.MessageTokens {
 			switch token := token.(type) {
+			case MessageTokenEndSubtype:
+				md = append(md, "*")
+			case MessageTokenStartSubtype:
+				md = append(md, "*")
 			case MessageTokenNewLine:
 				md = append(md, "\n    ")
 			case MessageTokenText:

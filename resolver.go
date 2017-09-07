@@ -22,6 +22,12 @@ type MessageTokenNewLine struct {
 type MessageTokenText struct {
 	Text string
 }
+type MessageTokenStartSubtype struct {
+	Text string
+}
+type MessageTokenEndSubtype struct {
+	Text string
+}
 type MessageTokenLink struct {
 	Href string
 	Text string
@@ -52,6 +58,12 @@ func (l *messageTokenListener) OnNewLine() {
 }
 func (l *messageTokenListener) OnText(text string) {
 	l.add(MessageTokenText{text})
+}
+func (l *messageTokenListener) OnEndSubtype(text string) {
+	l.add(MessageTokenEndSubtype{text})
+}
+func (l *messageTokenListener) OnStartSubtype(text string) {
+	l.add(MessageTokenStartSubtype{text})
 }
 func (l *messageTokenListener) OnLink(href, text string) {
 	text2 := text
@@ -119,7 +131,7 @@ func (r *Resolver) Resolve(m *Message) MessageResolved {
 	res.Ts = SlackTsToTime(m.Ts)
 
 	messageListner := newMessageTokenListener(r)
-	NewSlackMessageParser(messageListner).Parse(m.Text)
+	NewSlackMessageParser(messageListner).Parse(m.Text, m.Subtype)
 	res.MessageTokens = messageListner.Tokens
 
 	return *res
