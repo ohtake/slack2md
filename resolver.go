@@ -12,6 +12,7 @@ type Resolver struct {
 type MessageResolved struct {
 	User          *User
 	BotID         string
+	Subtype       string
 	MessageTokens []MessageToken
 	Ts            time.Time
 }
@@ -117,6 +118,7 @@ func (r *Resolver) Resolve(m *Message) MessageResolved {
 	res.BotID = m.BotID
 
 	res.Ts = SlackTsToTime(m.Ts)
+	res.Subtype = m.Subtype
 
 	messageListner := newMessageTokenListener(r)
 	NewSlackMessageParser(messageListner).Parse(m.Text)
