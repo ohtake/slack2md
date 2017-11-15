@@ -1,10 +1,10 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path"
-	"flag"
 )
 
 var chunkSize = flag.Int("messages", 500, "Number of messages per page")
