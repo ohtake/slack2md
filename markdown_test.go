@@ -54,7 +54,7 @@ func TestMarkdownHeadings(t *testing.T) {
 
 func TestMarkdownChannelList(t *testing.T) {
 	m := NewMarkdownTranslator()
-	channels := ReadChannels("test_data/channels.json")
+	channels := ReadChannels("testdata/channels.json")
 	testLines(t, m.ToChannelList(channels), []string{
 		"* [\\#channel1](channel--channel1.md)",
 		"* [\\#channel2](channel--channel2.md)",
@@ -64,7 +64,7 @@ func TestMarkdownChannelList(t *testing.T) {
 
 func TestMarkdownChunkList(t *testing.T) {
 	m := NewMarkdownTranslator()
-	chunkInfos := ReadAllChunksAsInfo(3, "test_data/channel1")
+	chunkInfos := ReadAllChunksAsInfo(3, "testdata/channel1")
 	actual := m.ToChunkList(chunkInfos)
 	testLines(t, actual, []string{
 		"* [1 (2016-05-13T08:43:07Z - 2016-05-13T08:43:09Z)](history--channel1--1.md)",
@@ -74,10 +74,10 @@ func TestMarkdownChunkList(t *testing.T) {
 }
 
 func TestMarkdownMessageList(t *testing.T) {
-	channels := ReadChannels("test_data/channels.json")
-	users := ReadUsers("test_data/users.json")
+	channels := ReadChannels("testdata/channels.json")
+	users := ReadUsers("testdata/users.json")
 	resolver := NewResolver(channels, users)
-	chunks := ReadAllChunks(3, "test_data/channel1")
+	chunks := ReadAllChunks(3, "testdata/channel1")
 	resolvedMessages := make([]MessageResolved, 0, len(chunks[0]))
 	for _, m := range chunks[0] {
 		resolvedMessages = append(resolvedMessages, resolver.Resolve(&m))
@@ -93,7 +93,7 @@ func TestMarkdownMessageList(t *testing.T) {
 }
 
 func TestMarkdownUserTable(t *testing.T) {
-	users := ReadUsers("test_data/users.json")
+	users := ReadUsers("testdata/users.json")
 	m := NewMarkdownTranslator()
 	actual := m.ToUserTable(users)
 	testLines(t, actual, []string{

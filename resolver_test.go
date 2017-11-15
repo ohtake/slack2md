@@ -6,7 +6,7 @@ import (
 )
 
 func newResolver() *Resolver {
-	return NewResolver(ReadChannels("test_data/channels.json"), ReadUsers("test_data/users.json"))
+	return NewResolver(ReadChannels("testdata/channels.json"), ReadUsers("testdata/users.json"))
 }
 
 func TestResolve(t *testing.T) {
@@ -33,7 +33,7 @@ func TestResolve(t *testing.T) {
 
 func TestResolveMessage(t *testing.T) {
 	resolver := newResolver()
-	messages := ReadHistory("test_data/channel1/2016-05-13.json")
+	messages := ReadHistory("testdata/channel1/2016-05-13.json")
 
 	m1 := resolver.Resolve(&messages[0])
 	if m1.User.Name != "alice" {

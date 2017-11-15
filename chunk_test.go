@@ -23,7 +23,7 @@ func ReadAllChunksAsInfo(chunkSize int, channelDirectory string) []ChunkInfo {
 }
 
 func TestChunkedHistoryReader(t *testing.T) {
-	actual := ReadAllChunks(4, "test_data/channel1")
+	actual := ReadAllChunks(4, "testdata/channel1")
 	expectedChunkSizes := []int{4, 2}
 	if len(expectedChunkSizes) != len(actual) {
 		t.Errorf("Wrong length: %d, %d", len(expectedChunkSizes), len(actual))
@@ -49,7 +49,7 @@ func TestChunkedHistoryReader(t *testing.T) {
 func TestToChunkInfo(t *testing.T) {
 	expectedMessageSizes := []int{3, 3}
 	expectedYear := 2016
-	actual := ReadAllChunksAsInfo(3, "test_data/channel1")
+	actual := ReadAllChunksAsInfo(3, "testdata/channel1")
 
 	for i := 0; i < len(actual); i++ {
 		if actual[i].NumMessages != expectedMessageSizes[i] {
