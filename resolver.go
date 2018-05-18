@@ -72,7 +72,7 @@ func (l *messageTokenListener) OnChannel(channelID, alt string) {
 func (l *messageTokenListener) OnUser(userID, alt string) {
 	user := l.resolver.ResolveUser(userID)
 	text := alt
-	if "" == text {
+	if "" == text && nil != user {
 		text = user.Name
 	}
 	l.add(MessageTokenUser{user, text})
