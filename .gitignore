@@ -24,7 +24,7 @@ _testmain.go
 *.prof
 
 # Builds
-/out
+/dist
 
 # Slack related files
 /slack_export
