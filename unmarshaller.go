@@ -6,9 +6,9 @@ import (
 )
 
 type Channel struct {
-	ID      string `json:"id"`
-	Name    string `json:"name"`
-	Created string `json:"created"`
+	ID      string      `json:"id"`
+	Name    string      `json:"name"`
+	Created json.Number `json:"created"`
 }
 
 type User struct {
