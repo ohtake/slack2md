@@ -1,6 +1,6 @@
 language: go
 go:
-  - "1.10.2"
+  - "1.13.1"
 script:
   - go test -v -coverprofile=coverage.txt -covermode=atomic
 after_success:
