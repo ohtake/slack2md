@@ -8,4 +8,3 @@ mkdir -p out
 GOOS=darwin  GOARCH=amd64 go build -o out/slack2md.darwin-amd64.out
 GOOS=linux   GOARCH=amd64 go build -o out/slack2md.linux-amd64.out
 GOOS=windows GOARCH=amd64 go build -o out/slack2md.windows-amd64.exe
-GOOS=windows GOARCH=386   go build -o out/slack2md.windows-386.exe
